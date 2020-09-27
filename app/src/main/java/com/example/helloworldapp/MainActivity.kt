@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(btn: View?) {
-        if (input1?.text.toString() == "" || input2?.text.toString() == "") output?.text = "Please provide a valid number"
+        if (input1?.text.toString() == "" || input2?.text.toString() == "") output?.text = "Please provide valid number"
         else {
             val a = input1?.text.toString().toDouble()
             val b = input2?.text.toString().toDouble()
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.subtraction -> subtract(a, b).toString()
                 R.id.multiplication -> multiply(a,b ).toString()
                 R.id.division -> {
-                    if (b.toString() == "0") "Cannot perform operation division by zero."
+                    if (b.toString() == "0.0") "Cannot perform operation division by zero."
                     else divide(a, b).toString()
                 }
                 else -> add(a, b).toString()
