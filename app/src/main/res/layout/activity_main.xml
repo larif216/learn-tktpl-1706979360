@@ -32,28 +32,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
-            android:onClick="add"
             android:id="@+id/addition"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/addition"
             android:text="-"
-            android:onClick="subtract"
             android:id="@+id/subtraction"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/subtraction"
             android:text="*"
-            android:onClick="multiply"
             android:id="@+id/multiplication"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/multiplication"
             android:text="/"
-            android:onClick="division"
             android:id="@+id/division"/>
     </RelativeLayout>
 

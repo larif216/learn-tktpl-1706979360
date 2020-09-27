@@ -1,16 +1,16 @@
 package com.example.helloworldapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var a: Double? = null
-    private var b: Double? = null
-    private var result: Double? = null
     private var input1: EditText? = null
     private var input2: EditText? = null
     private var output: TextView? = null
@@ -22,37 +22,50 @@ class MainActivity : AppCompatActivity() {
         input1 = findViewById(R.id.input1)
         input2 = findViewById(R.id.input2)
         output = findViewById(R.id.result)
+
+        val btnAdd = findViewById<Button>(R.id.addition)
+        val btnSub = findViewById<Button>(R.id.subtraction)
+        val btnMul = findViewById<Button>(R.id.multiplication)
+        val btnDiv = findViewById<Button>(R.id.division)
+
+        btnAdd.setOnClickListener(this)
+        btnSub.setOnClickListener(this)
+        btnMul.setOnClickListener(this)
+        btnDiv.setOnClickListener(this)
     }
 
-    private fun convertToDouble() {
-        a = input1?.text.toString().toDouble()
-        b = input2?.text.toString().toDouble()
-    }
-
-    fun add(view: View) {
-        convertToDouble()
-        result = b?.let { a?.plus(it) }
-        output?.text = result.toString()
-    }
-
-    fun subtract(view: View) {
-        convertToDouble()
-        result = b?.let { a?.minus(it) }
-        output?.text = result.toString()
-    }
-
-    fun multiply(view: View) {
-        convertToDouble()
-        result = b?.let { a?.times(it) }
-        output?.text = result.toString()
-    }
-
-    fun division(view: View) {
-        if (input2?.text.toString() == "0") output?.text = "Error: division by zero"
+    override fun onClick(btn: View?) {
+        if (input1?.text.toString() == "" || input2?.text.toString() == "") output?.text = "Please provide a valid number"
         else {
-            convertToDouble()
-            result = b?.let { a?.div(it) }
-            output?.text = result.toString()
+            val a = input1?.text.toString().toDouble()
+            val b = input2?.text.toString().toDouble()
+            val result: String = when(btn?.id) {
+                R.id.addition -> add(a, b).toString()
+                R.id.subtraction -> subtract(a, b).toString()
+                R.id.multiplication -> multiply(a,b ).toString()
+                R.id.division -> {
+                    if (b.toString() == "0") "Cannot perform operation division by zero."
+                    else divide(a, b).toString()
+                }
+                else -> add(a, b).toString()
+            }
+            output?.text = result
         }
+    }
+
+    fun add(a: Double, b: Double): Double {
+        return a.plus(b)
+    }
+
+    fun subtract(a: Double, b: Double): Double {
+        return a.minus(b)
+    }
+
+    fun multiply(a: Double, b: Double): Double {
+        return a.times(b)
+    }
+
+    fun divide(a: Double, b: Double): Double {
+        return a.div(b)
     }
 }
