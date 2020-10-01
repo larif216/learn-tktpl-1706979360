@@ -10,11 +10,10 @@ import java.util.*
 class StopwatchService : Service() {
 
     companion object {
-        private const val TAG: String = "BroadcastService"
-        private const val STOPWATCH_BR: String = "com.example.helloworldapp.stopwatch_br"
+        const val TAG: String = "BroadcastService"
+        const val STOPWATCH_BR: String = "com.example.helloworldapp.stopwatch_br"
     }
     private var seconds: Int = 0
-    private var isRunning: Boolean = false
     val bi: Intent = Intent(STOPWATCH_BR)
 
     override fun onBind(intent: Intent): IBinder? {
@@ -23,7 +22,8 @@ class StopwatchService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        val handler: Handler = Handler()
+        Log.i(TAG, "Service Started!")
+        val handler = Handler()
         val runnable = object: Runnable {
             override fun run() {
                 val hours = seconds / 3600
@@ -32,12 +32,11 @@ class StopwatchService : Service() {
 
                 val time = String.format(Locale.getDefault(),"%02d:%02d:%02d", hours, minutes, secs)
 
-                if (isRunning) {
-                    seconds++
-                }
+                seconds++
 
                 bi.putExtra("Time", time)
                 sendBroadcast(bi)
+                Log.d("Time", time)
 
                 handler.postDelayed(this, 1000)
             }
