@@ -14,7 +14,9 @@ class StopwatchService : Service() {
         const val STOPWATCH_BR: String = "com.example.helloworldapp.stopwatch_br"
     }
     private var seconds: Int = 0
-    val bi: Intent = Intent(STOPWATCH_BR)
+    private val bi: Intent = Intent(STOPWATCH_BR)
+    private val handler = Handler()
+    private lateinit var runnable: Runnable
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -23,8 +25,7 @@ class StopwatchService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "Service Started!")
-        val handler = Handler()
-        val runnable = object: Runnable {
+        runnable = object: Runnable {
             override fun run() {
                 val hours = seconds / 3600
                 val minutes = (seconds % 3600) / 60
@@ -46,6 +47,7 @@ class StopwatchService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler.removeCallbacks(runnable)
         Log.i(TAG, "Service Finished!")
     }
 }
