@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.helloworldapp.services.StopwatchService
 
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         const val TAG = "MainActivity"
         const val INITIAL_TIME = "00:00:00"
     }
+    private var doubleBackToExitPressedOnce = false
     private var textView: TextView? = null
     private var buttonStart: Button? = null
     private var buttonStop: Button? = null
@@ -49,6 +52,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         Log.i(TAG, "Paused!")
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "Stopped!")
+    }
+
     private fun init() {
         textView = findViewById(R.id.time_view)
         textView?.text = INITIAL_TIME
@@ -57,6 +65,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStop = findViewById(R.id.stop_button)
         buttonReset = findViewById(R.id.reset_button)
         setListener()
+
+        buttonStart?.isEnabled = true
+        buttonStop?.isEnabled = false
+        buttonReset?.isEnabled = false
     }
 
     private fun setListener() {
@@ -101,5 +113,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateTextView(value: String?) {
         textView?.text = value
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+        } else {
+            doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed(Runnable {
+                doubleBackToExitPressedOnce = false
+            }, 2000)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopStopwatch()
+        Log.i(TAG, "Destroyed!")
     }
 }
