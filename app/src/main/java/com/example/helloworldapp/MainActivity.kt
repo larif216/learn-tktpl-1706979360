@@ -66,9 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonReset = findViewById(R.id.reset_button)
         setListener()
 
-        buttonStart?.isEnabled = true
-        buttonStop?.isEnabled = false
-        buttonReset?.isEnabled = false
+        disableButton(intArrayOf(R.id.stop_button, R.id.reset_button))
     }
 
     private fun setListener() {
@@ -90,25 +88,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         Log.i(TAG, "Button reset was clicked!")
         stopService(Intent(this, StopwatchService::class.java))
         textView?.text = INITIAL_TIME
-        buttonStart?.isEnabled = true
-        buttonStop?.isEnabled = false
-        buttonReset?.isEnabled = false
+        disableButton(intArrayOf(R.id.stop_button, R.id.reset_button))
     }
 
     private fun stopStopwatch() {
         Log.i(TAG, "Button stop was clicked!")
         stopService(Intent(this, StopwatchService::class.java))
-        buttonStart?.isEnabled = true
-        buttonStop?.isEnabled = false
-        buttonReset?.isEnabled = true
+        disableButton(intArrayOf(R.id.stop_button))
     }
 
     private fun startStopwatch() {
         Log.i(TAG, "Button start was clicked!")
         startService(Intent(this, StopwatchService::class.java))
-        buttonStart?.isEnabled = false
+        disableButton(intArrayOf(R.id.start_button))
+    }
+
+    private fun disableButton(disabledButtons: IntArray) {
+        buttonStart?.isEnabled = true
         buttonStop?.isEnabled = true
         buttonReset?.isEnabled = true
+
+        buttonStart?.alpha = 1F
+        buttonStop?.alpha = 1F
+        buttonReset?.alpha = 1F
+
+        for (id in disabledButtons) {
+            findViewById<Button>(id).alpha = .5F
+            findViewById<Button>(id).isEnabled = false
+        }
     }
 
     private fun updateTextView(value: String?) {

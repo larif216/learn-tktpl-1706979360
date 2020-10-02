@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".MainActivity">
     
     <TextView
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:onClick="onClickStart"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
         android:text="@string/start"/>
 
     <Button
@@ -29,7 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="onClickStop"
+        android:backgroundTint="@color/colorRed"
+        android:textColor="#FFFFFF"
         android:text="@string/stop"/>
 
     <Button
@@ -38,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="onClickReset"
         android:text="@string/reset"/>
 
 </LinearLayout>
