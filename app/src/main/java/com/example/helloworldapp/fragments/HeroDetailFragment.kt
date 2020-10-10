@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.helloworldapp.R
 import com.example.helloworldapp.viewmodels.HeroViewModel
+import kotlinx.android.synthetic.main.fragment_hero_detail.*
+import kotlinx.android.synthetic.main.fragment_hero_detail.view.*
 
 /**
  * A fragment representing a list of Items.
@@ -36,11 +38,11 @@ class HeroDetailFragment : Fragment() {
             Glide.with(view.context)
                     .load(viewModel.getSelectedHero().value?.photo)
                     .apply(RequestOptions().override(350,350))
-                    .into(view.findViewById(R.id.detail_photo))
-            view.findViewById<TextView>(R.id.detail_name).text = viewModel.getSelectedHero().value?.name
-            view.findViewById<TextView>(R.id.detail_description).text = viewModel.getSelectedHero().value?.description
+                    .into(detail_photo)
+            detail_name.text = viewModel.getSelectedHero().value?.name
+            detail_description.text = viewModel.getSelectedHero().value?.description
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                view.findViewById<TextView>(R.id.detail_description).justificationMode = JUSTIFICATION_MODE_INTER_WORD
+                detail_description.justificationMode = JUSTIFICATION_MODE_INTER_WORD
             }
         })
     }

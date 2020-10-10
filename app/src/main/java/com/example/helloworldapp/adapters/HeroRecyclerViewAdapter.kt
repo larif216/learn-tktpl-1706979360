@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.helloworldapp.R
 import com.example.helloworldapp.models.Hero
+import kotlinx.android.synthetic.main.card_hero.view.*
 
 class HeroRecyclerViewAdapter(
         private val heroesList: List<Hero>,
@@ -36,8 +37,8 @@ class HeroRecyclerViewAdapter(
     override fun getItemCount(): Int = heroesList.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val photo: ImageView = view.findViewById(R.id.photo)
-        val name: TextView = view.findViewById(R.id.name)
+        val photo: ImageView = view.photo
+        val name: TextView = view.name
         init {
             view.setOnClickListener(View.OnClickListener {
                 listener.onHeroClick(heroesList[position])
