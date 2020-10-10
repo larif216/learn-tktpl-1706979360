@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Hello World App</string>
     <string name="halo">Hello World</string>
+    <string name="photo">Foto</string>
+    <string name="hero_s_name">Hero\'s name</string>
+    <string name="hero_s_description">Hero\'s Description</string>
 </resources>
