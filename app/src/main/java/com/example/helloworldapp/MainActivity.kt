@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +12,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.helloworldapp.network.ApiClient
+import com.example.helloworldapp.network.ApiInterface
+import com.example.helloworldapp.network.WifiData
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.stream.Collectors
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +34,8 @@ class MainActivity : AppCompatActivity() {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onReceive(context: Context, intent: Intent) {
                 if (intent.action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
-                    scanSuccess()
+                    setWifiList()
+                    sendWifiData()
                     unregisterReceiver(this)
                     btn_scan_wifi.isEnabled = true
                 }
@@ -53,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun scanSuccess() {
+    private fun setWifiList() {
         val scanResult = wifiManager.scanResults
         list_view.adapter = ArrayAdapter(
                 this,
@@ -62,6 +68,27 @@ class MainActivity : AppCompatActivity() {
                     it.SSID
                 }.collect(Collectors.toList())
         )
+    }
+
+    private fun sendWifiData() {
+        val scanResult = wifiManager.scanResults
+        val apiInterface = ApiClient.getApiClient().create(ApiInterface::class.java)
+        for (result in scanResult) {
+            val wifiData = WifiData(
+                    result.SSID,
+                    result.BSSID
+            )
+            val call = apiInterface.sendWifiData(wifiData)
+            call.enqueue(object: Callback<WifiData> {
+                override fun onResponse(call: Call<WifiData>, response: Response<WifiData>) {
+                    Log.d("Code Status", response.code().toString())
+                }
+
+                override fun onFailure(call: Call<WifiData>, t: Throwable) {
+                    Toast.makeText(applicationContext, "Failed!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
 }
