@@ -13,9 +13,20 @@ Java_com_example_helloworldapp_MainActivity_nativeFunc(
     const char *nativeInput = (*env)->GetStringUTFChars(env, input, 0);
     (*env)->ReleaseStringUTFChars(env, input, nativeInput);
 
-    char reversedString[100];
-    strcpy(reversedString, nativeInput);
-    strrev(reversedString)
+    char s[1000], r[1000];
+    int begin, end, count = 0;
+    strcpy(s, nativeInput);
+    while (s[count] != '\0')
+        count++;
 
-    return (*env)->NewStringUTF(env, reversedString);
+    end = count - 1;
+
+    for (begin = 0; begin < count; begin++) {
+        r[begin] = s[end];
+        end--;
+    }
+
+    r[begin] = '\0';
+
+    return (*env)->NewStringUTF(env, r);
 }

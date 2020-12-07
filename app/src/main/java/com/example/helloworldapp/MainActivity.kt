@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
             val reversedString = nativeFun(input.text.toString())
             result.text = reversedString.toString()
         }
+
     }
 
     external fun nativeFun(input: String)

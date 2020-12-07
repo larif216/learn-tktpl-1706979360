@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Input String"
-            android:textColor="@android:color/white"
             android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -31,10 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:background="@color/colorAccent"
         android:text="Reverse"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"/>
+        android:textAllCaps="false"/>
 
     <TextView
         android:id="@+id/result"
