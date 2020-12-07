@@ -5,7 +5,7 @@
 #include <jni.h>
 
 JNIEXPORT jstring JNICALL
-Java_com_example_helloworldapp_MainActivity_nativeFunc(
+Java_com_example_helloworldapp_MainActivity_nativeFun(
     JNIEnv* env,
     jobject thiz,
     jstring input
